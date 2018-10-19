@@ -1,0 +1,12 @@
+"""Version details for maluforce"""
+
+__title__ = "maluforce"
+__description__ = "A basic Salesforce and Pandas interface"
+__url__ = "https://github.com/stone-payments/maluforce"
+__version__ = "0.0.1"
+__author__ = "Rodrigo Maluf"
+__author_email__ = "rodrigo.maluf@stone.com.br"
+__license__ = "None"
+__maintainer__ = "Rodrigo Maluf"
+__maintainer_email__ = "rodrigo.maluf@stone.com.br"
+__keywords__ = "python salesforce salesforce.com pandas"
