@@ -7,6 +7,7 @@ from maluforce.validators import (path_formatter)
 SF_BULK_MAX_CHAR = 10000000
 SF_BULK_MAX_ITEM = 10000
 
+
 def num_char(lista):
     """
         Return the number of characters in a list
@@ -78,7 +79,8 @@ def split_lod(lod, max_items=10000, max_chars=10000000):
 
     splited_final = []
     for splited_partial in split_lod_by_item(lod, max_items=max_items):
-        splited_final.extend(split_lod_by_char(splited_partial, max_chars=max_chars))
+        splited_final.extend(split_lod_by_char(
+            splited_partial, max_chars=max_chars))
     return splited_final
 
 
@@ -104,7 +106,7 @@ def read_lod_file(filename):
         return eval(target.read())
 
 
-def read_lod_files(filenames,path=None):
+def read_lod_files(filenames, path=None):
     """
         Carrega os arquivos (.mtxt) da pasta especificada. Os arquivos devem ter indices sequenciais
         [input]
@@ -117,12 +119,14 @@ def read_lod_files(filenames,path=None):
     """
     path = path_formatter(path)
     if type(filenames) != list:
-        raise ValueError("{}: filenames invalid parameter!".format("read_lod_files"))
+        raise ValueError(
+            "{}: filenames invalid parameter!".format("read_lod_files"))
     elif len(filenames) == 0:
-        raise ValueError("{}: filenames invalid parameter!".format("read_lod_files"))
+        raise ValueError(
+            "{}: filenames invalid parameter!".format("read_lod_files"))
     # lists all files in especified path
     dir_files = []
-    for __,__,files in os.walk(path):
+    for __, __, files in os.walk(path):
         for f in files:
             dir_files.append(f)
     # lists .mtxt filenames
@@ -146,4 +150,3 @@ def read_lod_files(filenames,path=None):
                 load_file = read_lod_file(path + f)
                 loaded_files[nome_alvo].append(load_file)
     return loaded_files
-

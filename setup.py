@@ -6,13 +6,6 @@ import os
 
 pyver_install_requires = []
 pyver_tests_require = []
-if sys.version_info < (2, 7):
-    pyver_install_requires.append('ordereddict>=1.1')
-    pyver_tests_require.append('unittest2>=0.5.1')
-
-if sys.version_info < (3, 0):
-    pyver_tests_require.append('mock==1.0.1')
-
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -28,24 +21,16 @@ setup(
     author_email=about['__author_email__'],
     maintainer=about['__maintainer__'],
     maintainer_email=about['__maintainer_email__'],
-    packages=['maluforce',],
+    packages=['maluforce', ],
     url=about['__url__'],
     license=about['__license__'],
     description=about['__description__'],
     # long_description=textwrap.dedent(open('README.rst', 'r').read()),
 
     install_requires=[
-        'requests[security]',
         'pandas>=0.23.0',
         'simple-salesforce>=0.74.2'
     ] + pyver_install_requires,
-    tests_require=[
-        'nose>=1.3.0',
-        'pytz>=2014.1.1',
-        'responses>=0.5.1',
-    ] + pyver_tests_require,
-    test_suite = 'nose.collector',
-
     keywords=about['__keywords__'],
     classifiers=[
         'Development Status :: 4 - Beta',

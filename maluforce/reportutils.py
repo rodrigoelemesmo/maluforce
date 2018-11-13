@@ -2,7 +2,8 @@ import copy
 import pandas as pd
 from collections import OrderedDict
 
-def adjust_report(report,utf_encoded=False):
+
+def adjust_report(report, utf_encoded=False):
     """ 
         Adjusts a Salesforce dml operation response into a pandas.DataFrame utf-8 encoded for .xlsx compatibility
     """
@@ -38,7 +39,7 @@ def lod_rename(lod, key_map, drop=False):
         [output]
         * lod - with renamed keys
     """
-    return to_lod(pd.DataFrame(lod),key_map=key_map, drop=drop)
+    return to_lod(pd.DataFrame(lod), key_map=key_map, drop=drop)
 
 
 def to_lod(df, key_map=None, drop=False):
@@ -70,7 +71,8 @@ def to_lod(df, key_map=None, drop=False):
         df_new_columns = df_copy.rename(index=str, columns=key_map, copy=True)
         if drop:
             df_new_columns.drop(
-                columns=list(set(df_new_columns.columns) - set(key_map.values())),
+                columns=list(set(df_new_columns.columns) -
+                             set(key_map.values())),
                 inplace=True,
             )
         out = df_new_columns.to_dict(orient="records")
@@ -87,7 +89,7 @@ def decodeSFresponse(resp):
 def decodeSFObject(root):
     dict_node = {}
     for node in list(set(root.keys()) - {"attributes"}):
-        if type(root[node]) in [OrderedDict,dict]:
+        if type(root[node]) in [OrderedDict, dict]:
             tmp = {}
             tmp = decodeSFObject(root[node])
             for sub in tmp:
@@ -96,6 +98,8 @@ def decodeSFObject(root):
             dict_node[node] = root[node]
     return dict_node
 
+
 def to_unicode(df):
-    out = df.applymap(lambda x: x.encode('unicode_escape').decode('utf-8') if isinstance(x, str) else x)
+    out = df.applymap(lambda x: x.encode('unicode_escape').decode(
+        'utf-8') if isinstance(x, str) else x)
     return out

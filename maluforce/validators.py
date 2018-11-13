@@ -30,7 +30,7 @@ def fixCNPJ(cnpj, n):
 def path_formatter(path):
     if path is not None:
         if path[-1] != "/":
-            raise ValueError("The given path does not point to a folder. Be sure to append '/' at its end.")
+            path+='/'            
     else:
         path = os.getcwd() + "/"
     return path
