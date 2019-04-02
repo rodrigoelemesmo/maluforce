@@ -3,7 +3,7 @@
 __title__ = "maluforce"
 __description__ = "A basic Salesforce and Pandas interface"
 __url__ = "https://github.com/rodrigoelemesmo/maluforce"
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __author__ = "Rodrigo Maluf"
 __author_email__ = "rodrigo1793@gmail.com"
 __license__ = "None"
