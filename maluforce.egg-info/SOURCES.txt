@@ -1,0 +1,13 @@
+README.md
+setup.py
+maluforce/__init__.py
+maluforce/__version__.py
+maluforce/core.py
+maluforce/fileutils.py
+maluforce/reportutils.py
+maluforce/validators.py
+maluforce.egg-info/PKG-INFO
+maluforce.egg-info/SOURCES.txt
+maluforce.egg-info/dependency_links.txt
+maluforce.egg-info/requires.txt
+maluforce.egg-info/top_level.txt

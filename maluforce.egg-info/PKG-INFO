@@ -1,0 +1,26 @@
+Metadata-Version: 1.2
+Name: maluforce
+Version: 0.0.4
+Summary: A basic Salesforce and Pandas interface
+Home-page: https://github.com/rodrigoelemesmo/maluforce
+Author: Rodrigo Maluf
+Author-email: rodrigo1793@gmail.com
+Maintainer: Rodrigo Maluf
+Maintainer-email: rodrigo1793@gmail.com
+License: None
+Description: UNKNOWN
+Keywords: python salesforce salesforce.com pandas
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: Implementation :: PyPy
