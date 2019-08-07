@@ -250,3 +250,7 @@ class Maluforce(Salesforce):
             query = query_template.format(",".join(fields), obj, params)
             lod_resp = self.query_salesforce(obj=obj, query=query, api=api)
         return lod_resp
+    
+    def soql_dataframe(soql, api='rest'):
+        obj_name = re.findall('from\s+\w+', soql.lower())[0].replace('from', '').strip()
+        return pd.DataFrame(sf.query_salesforce(obj_name, soql, api))
