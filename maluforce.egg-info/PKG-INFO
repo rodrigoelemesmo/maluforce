@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
 Name: maluforce
-Version: 0.0.4
+Version: 0.0.6
 Summary: A basic Salesforce and Pandas interface
 Home-page: https://github.com/rodrigoelemesmo/maluforce
 Author: Rodrigo Maluf
