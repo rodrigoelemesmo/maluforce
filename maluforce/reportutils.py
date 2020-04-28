@@ -22,11 +22,8 @@ def adjust_report(report, utf_encoded=False):
             s.append(i)
     dataframe = pd.DataFrame(s)
     if utf_encoded:
-        dataframe = dataframe.applymap(
-            lambda x: x.encode("unicode_escape").decode("utf-8")
-            if isinstance(x, str)
-            else x
-        )
+        dataframe = dataframe.applymap(lambda x: x.encode(
+            "unicode_escape").decode("utf-8") if isinstance(x, str) else x)
     return dataframe
 
 
@@ -59,20 +56,16 @@ def to_lod(df, key_map=None, drop=False):
         if len(keys_not_found) != 0:
             raise ValueError(
                 "The following keys were not found in the data: {}".format(
-                    keys_not_found
-                )
-            )
+                    keys_not_found))
         if len(colm_not_in_map) > 0 and (not drop):
             raise ValueError(
-                "The following were not found on the key_map.keys(). Set drop to True to drop them: {}".format(
-                    colm_not_in_map
-                )
-            )
+                "The following were not found on the key_map.keys(). Set drop to True to drop them: {}"
+                .format(colm_not_in_map))
         df_new_columns = df_copy.rename(index=str, columns=key_map, copy=True)
         if drop:
             df_new_columns.drop(
-                columns=list(set(df_new_columns.columns) -
-                             set(key_map.values())),
+                columns=list(
+                    set(df_new_columns.columns) - set(key_map.values())),
                 inplace=True,
             )
         out = df_new_columns.to_dict(orient="records")
@@ -100,6 +93,6 @@ def decodeSFObject(root):
 
 
 def to_unicode(df):
-    out = df.applymap(lambda x: x.encode('unicode_escape').decode(
-        'utf-8') if isinstance(x, str) else x)
+    out = df.applymap(lambda x: x.encode('unicode_escape').decode('utf-8')
+                      if isinstance(x, str) else x)
     return out

@@ -8,15 +8,15 @@ from simple_salesforce import Salesforce
 from simple_salesforce.exceptions import (SalesforceMalformedRequest)
 
 from maluforce.validators import (path_formatter)
-from maluforce.reportutils import (
-    adjust_report, lod_rename, to_lod, decodeSFObject, decodeSFresponse)
-from maluforce.fileutils import (
-    num_char, split_lod, split_lod_by_char, split_lod_by_item, save_lod_files, read_lod_file, read_lod_files, SF_BULK_MAX_CHAR, SF_BULK_MAX_ITEM
-)
+from maluforce.reportutils import (adjust_report, lod_rename, to_lod,
+                                   decodeSFObject, decodeSFresponse)
+from maluforce.fileutils import (num_char, split_lod, split_lod_by_char,
+                                 split_lod_by_item, save_lod_files,
+                                 read_lod_file, read_lod_files,
+                                 SF_BULK_MAX_CHAR, SF_BULK_MAX_ITEM)
 
 
 class Maluforce(Salesforce):
-
     def lod_to_saleforce(self, obj, method, data, step=5000):
         """
             [input]
@@ -27,20 +27,18 @@ class Maluforce(Salesforce):
             [output]
             * lod
         """
-        assert method in [
-            "insert", "delete", "upsert", "update", "undelete"
-        ], """invalid method"""
-        assert (
-            (type(data) is list) and (True if len(
-                data) == 0 else type(data[0]) is dict)
-        ), """wrong data format"""
+        assert method in ["insert", "delete", "upsert", "update",
+                          "undelete"], """invalid method"""
+        assert ((type(data) is list)
+                and (True if len(data) == 0 else
+                     type(data[0]) is dict)), """wrong data format"""
         assert type(step) in [type(None), int]
         step = min(10000, step)
         completeReport = []
         outlist = []
         for i in range(0, len(data), step):
-            output = eval("self.bulk.{}.{}".format(
-                obj, method))(data[i:i + step])
+            output = eval("self.bulk.{}.{}".format(obj,
+                                                   method))(data[i:i + step])
             outlist.extend(output)
         for i in range(0, len(outlist)):
             completeReport.append({**outlist[i], **data[i]})
@@ -59,9 +57,9 @@ class Maluforce(Salesforce):
             "query_salesforce")
         assert type(query) is str, "{} : query must be a str".format(
             "query_salesforce")
-        assert api in ["bulk", "rest"], "{} : api options are: bulk, rest".format(
-            "query_salesforce"
-        )
+        assert api in [
+            "bulk", "rest"
+        ], "{} : api options are: bulk, rest".format("query_salesforce")
         lod_resp = []
         resp = []
         if api == "bulk":
@@ -80,9 +78,7 @@ class Maluforce(Salesforce):
             except (IndexError, SalesforceMalformedRequest) as e:
                 print("{}: {} invalid request: {}".format(
                     "query_salesforce", api, e))
-                print(
-                    "Trying limiting the response to 2000 registers..."
-                )
+                print("Trying limiting the response to 2000 registers...")
                 try:
                     resp = self.query(query)
                 except (IndexError, SalesforceMalformedRequest) as e:
@@ -138,23 +134,25 @@ class Maluforce(Salesforce):
                 filename = """{}_{}_report_{}_{}""".format(
                     pref, method, obj, suf)
                 start_time = timeit.default_timer()
-                print(
-                    "{} #{} of {} {} started at {}, saved on {}:".format(
-                        method, count, len(lod), obj, timeit.time.strftime(
-                            "%H:%M:%S", timeit.time.localtime()), filename
-                    )
-                )
+                print("{} #{} of {} {} started at {}, saved on {}:".format(
+                    method, count, len(lod), obj,
+                    timeit.time.strftime("%H:%M:%S", timeit.time.localtime()),
+                    filename))
                 # sends to salesforce
-                report = self.lod_to_saleforce(
-                    obj=obj, method=method, data=lod, step=step)
+                report = self.lod_to_saleforce(obj=obj,
+                                               method=method,
+                                               data=lod,
+                                               step=step)
                 # format response
                 df_report = adjust_report(report)
                 df_report = df_report.assign(taskid=df_report["id"])
                 df_report.drop(columns=["id"], inplace=True)
                 # reports
                 lod_report = df_report.to_dict(orient="records")
-                save_lod_files(
-                    files=[lod_report], filename=filename, path=path, start_index=count)
+                save_lod_files(files=[lod_report],
+                               filename=filename,
+                               path=path,
+                               start_index=count)
                 lod_report_final.append(lod_report)
                 err = df_report[~df_report.success].shape[0]
                 suc = df_report[df_report.success].shape[0]
@@ -162,8 +160,8 @@ class Maluforce(Salesforce):
                 print("\tsuccess:", suc)
                 if err > 0:
                     try:
-                        df_report.to_excel(
-                            "{}{}_{}.xlsx".format(path, filename, count))
+                        df_report.to_excel("{}{}_{}.xlsx".format(
+                            path, filename, count))
                     except:
                         pass
                     print("\tmessages: ", set(df_report.message))
@@ -215,16 +213,14 @@ class Maluforce(Salesforce):
         for obj in s_objects:
             describe_obj = eval("self.{}.describe()".format(obj))
             df_full_object = pd.DataFrame(describe_obj["fields"])
-            df_short_object = df_full_object[
-                list(properties & set(df_full_object.columns))
-            ].copy()
+            df_short_object = df_full_object[list(
+                properties & set(df_full_object.columns))].copy()
             df_short_object["object"] = obj
-            objects_describe = pd.concat(
-                [df_short_object, objects_describe], axis=0
-            )
+            objects_describe = pd.concat([df_short_object, objects_describe],
+                                         axis=0)
         if filename is not None:
-            objects_describe.to_excel(
-                "{}{}.xlsx".format(path, filename), index=False)
+            objects_describe.to_excel("{}{}.xlsx".format(path, filename),
+                                      index=False)
         lod_objects_describe = objects_describe.to_dict(orient="records")
         return lod_objects_describe
 
@@ -250,7 +246,8 @@ class Maluforce(Salesforce):
             query = query_template.format(",".join(fields), obj, params)
             lod_resp = self.query_salesforce(obj=obj, query=query, api=api)
         return lod_resp
-    
+
     def soql_dataframe(soql, api='rest'):
-        obj_name = re.findall('from\s+\w+', soql.lower())[0].replace('from', '').strip()
+        obj_name = re.findall('from\s+\w+',
+                              soql.lower())[0].replace('from', '').strip()
         return pd.DataFrame(sf.query_salesforce(obj_name, soql, api))

@@ -79,8 +79,8 @@ def split_lod(lod, max_items=10000, max_chars=10000000):
 
     splited_final = []
     for splited_partial in split_lod_by_item(lod, max_items=max_items):
-        splited_final.extend(split_lod_by_char(
-            splited_partial, max_chars=max_chars))
+        splited_final.extend(
+            split_lod_by_char(splited_partial, max_chars=max_chars))
     return splited_final
 
 
@@ -97,7 +97,8 @@ def save_lod_files(files, filename, path=None, start_index=0):
     """
     path = path_formatter(path)
     for i, target in enumerate(files):
-        with open("{}{}_{}.mtxt".format(path, filename, i + start_index), "w") as f:
+        with open("{}{}_{}.mtxt".format(path, filename, i + start_index),
+                  "w") as f:
             f.write(str(target))
 
 
@@ -137,9 +138,7 @@ def read_lod_files(filenames, path=None):
     if not (set(filenames) < set(dir_filenames)):
         raise ValueError(
             "{}: the files {} were not found on the specified folder!".format(
-                "read_lod_files", str(set(filenames) - set(dir_filenames))
-            )
-        )
+                "read_lod_files", str(set(filenames) - set(dir_filenames))))
     filenames = list(set(filenames))  # remove duplicates
     loaded_files = {}
     for f in filenames:

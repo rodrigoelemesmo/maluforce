@@ -1,6 +1,7 @@
 import re
 import os
 
+
 def validId(id):
     """
         [input]
@@ -13,12 +14,18 @@ def validId(id):
         id = [id]
         strFlag = True
     out = [None] * len(id)
-    re_map = {"Pagar.me":"[a-f\\d]{24}", "Mundi":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}","Stone":"[\\d]+"}
+    re_map = {
+        "Pagar.me": "[a-f\\d]{24}",
+        "Mundi":
+        "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+        "Stone": "[\\d]+"
+    }
     for index, value in enumerate(id):
         for re_test in re_map:
-            if bool(re.fullmatch(re_map[re_test],value)):
+            if bool(re.fullmatch(re_map[re_test], value)):
                 out[index] = re_test
-    return out[0] if strFlag else out 
+    return out[0] if strFlag else out
+
 
 def fixCNPJ(cnpj, n):
     b = str(cnpj)
@@ -30,7 +37,7 @@ def fixCNPJ(cnpj, n):
 def path_formatter(path):
     if path is not None:
         if path[-1] != "/":
-            path+='/'            
+            path += '/'
     else:
         path = os.getcwd() + "/"
     return path

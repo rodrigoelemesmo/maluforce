@@ -28,9 +28,9 @@ setup(
     # long_description=textwrap.dedent(open('README.rst', 'r').read()),
 
     install_requires=[
-        'pandas==0.25.3',
-        'numpy==1.16.2',
-        'simple-salesforce==0.74.2'
+        'pandas>=0.25.3',
+        'numpy>=1.16.2',
+        'simple-salesforce>=1.0.0'
     ] + pyver_install_requires,
     keywords=about['__keywords__'],
     classifiers=[
@@ -40,12 +40,10 @@ setup(
         'Intended Audience :: System Administrators',
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: PyPy'
     ]
 )
