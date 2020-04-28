@@ -28,7 +28,7 @@ setup(
     # long_description=textwrap.dedent(open('README.rst', 'r').read()),
 
     install_requires=[
-        'pandas>=0.25.3',
+        'pandas',
         'numpy>=1.16.2',
         'simple-salesforce>=1.0.0'
     ] + pyver_install_requires,
